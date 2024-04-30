@@ -11,6 +11,7 @@ namespace BankBranchAPI.Controllers
         private readonly BankContext _context;
 
         private readonly AuthService service;
+
         public LoginController(AuthService service, BankContext context ) 
         {
             this.service = service;
@@ -26,7 +27,10 @@ namespace BankBranchAPI.Controllers
             {
                 return Ok(new { token = response.Token });
             }
-            return BadRequest("Username and/or Password is wrong");
+            else
+            {
+                return BadRequest("Username and/or Password is wrong");
+            }
 
         }
 
@@ -42,9 +46,12 @@ namespace BankBranchAPI.Controllers
             var newAccount = UserAccounts.Create(userRegistration.username, userRegistration.password, isAdmin);
 
             _context.Users.Add(newAccount);
+            
             _context.SaveChanges();
 
             return Ok(new { Message = "User Created" });
+
+
         }
 
    

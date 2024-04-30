@@ -4,7 +4,7 @@
     {
         public List<T> Data { get; set; }
         public int CurrentPage { get; set; }
-        public int TotalPage { get; set; }
+        public int TotalPages { get; set; }
         public int TotalRecords { get; set; }
 
     }
@@ -22,7 +22,7 @@
             {
                 Data = pagedData,
                 CurrentPage = pageNumber,
-                TotalPage = (int)Math.Ceiling((double)totalRecords / pageSize),
+                TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize),
                 TotalRecords = totalRecords
             };
         }

@@ -1,4 +1,5 @@
 ﻿using BankBranchAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,7 +16,9 @@ namespace BankBranchAPI.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AddEmployeeForm>>> GetAll()
         {
             return _context.employees.Select(b => new AddEmployeeForm
@@ -29,6 +32,7 @@ namespace BankBranchAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<AddEmployeeForm> Details(int id)
         {
             var bankEmployee = _context.employees.Find(id);
@@ -49,6 +53,7 @@ namespace BankBranchAPI.Controllers
 
 
         [HttpPost("AddEmployee")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<Employee>> AddEmployee(AddEmployeeForm employee)
         {
             try
@@ -80,6 +85,7 @@ namespace BankBranchAPI.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id, AddEmployeeForm req)
         {
             try
@@ -111,6 +117,7 @@ namespace BankBranchAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // var bankBranch = _context.Branches.Find(id);
